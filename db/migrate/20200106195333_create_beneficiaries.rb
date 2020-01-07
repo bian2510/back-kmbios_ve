@@ -1,7 +1,7 @@
 class CreateBeneficiaries < ActiveRecord::Migration[6.0]
   def change
     create_table :beneficiaries do |t|
-      t.integer :account_number
+      t.string :account_number
       t.string :name
       t.string :last_name
       t.string :bank
