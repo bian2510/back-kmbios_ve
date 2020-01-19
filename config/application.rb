@@ -40,7 +40,7 @@ module KmbiosVeApi
         origins '*'
         resource '*',
         headers: :any,
-        methods: %i[get post options],
+        methods: %i[get post options delete update],
         expose: %w[access-token expiry token-type uid client]
       end
     end
