@@ -1,5 +1,4 @@
 class Beneficiary < ApplicationRecord
-  validates :account_number, on: :create, uniqueness: true
   validates :account_number, length: { in: 20..20 }
   validates :name, :last_name, :account_number, :bank, :personal_id,
             :telephone_number, presence: true
