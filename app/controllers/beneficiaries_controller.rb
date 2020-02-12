@@ -22,6 +22,15 @@ class  BeneficiariesController < ApplicationController
     end
   end
 
+  def destroy
+    beneficiary = Beneficiary.find(params[:id])
+    if beneficiary.destroy
+      render json: beneficiary, status: :ok
+    else
+      render json: beneficiary.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def beneficiary_params
