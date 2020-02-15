@@ -15,8 +15,8 @@ class  BeneficiariesController < ApplicationController
 
   def update
     beneficiary = Beneficiary.find(params[:id])
-    if beneficiary.update_attributes(beneficiary_params)
-      render json: beneficiary, status: :created
+    if beneficiary.update(beneficiary_params)
+      render json: beneficiary, status: :ok
     else
       render json: beneficiary.errors, status: :unprocessable_entity
     end
