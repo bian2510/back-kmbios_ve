@@ -1,11 +1,13 @@
 class  BeneficiariesController < ApplicationController
   before_action :authenticate_user!
   def index
-    render json: Beneficiary.all
+
+    render json: Beneficiary.where(user_id: current_user.id)
   end
 
   def create
     beneficiary = Beneficiary.new(beneficiary_params)
+    beneficiary.user_id = current_user.id
     if beneficiary.save
       render json: beneficiary, status: :created
     else
