@@ -2,6 +2,7 @@
 
 class User < ActiveRecord::Base
   has_many :beneficiary
+  has_many :transactions
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   extend Devise::Models # Fix error undefined method `devise'
