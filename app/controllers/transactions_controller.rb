@@ -1,11 +1,11 @@
 class  TransactionsController < ApplicationController
     before_action :authenticate_user!
     def index
-      render json: transaction.where(user_id: current_user.id)
+      render json: Transaction.where(user_id: current_user.id)
     end
   
     def create
-      transaction = transaction.new(transaction_params)
+      transaction = Transaction.new(transaction_params)
       transaction.user_id = current_user.id
       transaction.in_progress
       if transaction.save
@@ -16,7 +16,7 @@ class  TransactionsController < ApplicationController
     end
   
     def update
-      transaction = transaction.find(params[:id])
+      transaction = Transaction.find(params[:id])
       if transaction.update(transaction_params)
         render json: transaction, status: :ok
       else
@@ -25,7 +25,7 @@ class  TransactionsController < ApplicationController
     end
   
     def destroy
-      transaction = transaction.find(params[:id])
+      transaction = Transaction.find(params[:id])
       if transaction.destroy
         render json: transaction, status: :ok
       else
