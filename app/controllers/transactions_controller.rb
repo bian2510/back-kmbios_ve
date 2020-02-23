@@ -1,14 +1,14 @@
 class  TransactionsController < ApplicationController
-    #before_action :authenticate_user!
+    before_action :authenticate_user!
     def index
-      render json: Transaction.where(users: User.first)
+      render json: Transaction.where(users: current_user)
     end
   
     def create
       transaction = Transaction.new(transaction_params)
       transaction.money_sent = transaction_params["money_received"] * transaction_params["rate"]
       transaction.beneficiary_id = Beneficiary.find(params[:beneficiary_id]).id
-      transaction.users = [User.first, User.find(params[:user_id])]
+      transaction.users = [current_user, User.find(params[:user_id])]
       transaction.in_progress = true
       puts transaction
       if transaction.save
