@@ -1,4 +1,5 @@
 class Transaction < ApplicationRecord
   belongs_to :beneficiary
-  has_many :users
+  belongs_to :admin
+  belongs_to :users
 end
