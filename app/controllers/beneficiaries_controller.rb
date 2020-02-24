@@ -1,5 +1,7 @@
 class  BeneficiariesController < ApplicationController
-  before_action :authenticate_user!
+  devise_token_auth_group :member, contains: [:user, :admin]
+  before_action :authenticate_member!, only: [:index]
+  before_action :authenticate_admin!, except: [:index]
   def index
     render json: Beneficiary.where(user_id: current_user.id)
   end
