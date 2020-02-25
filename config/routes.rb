@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  mount_devise_token_auth_for 'User', at: 'auth', :skip => [:registrations]
+  mount_devise_token_auth_for 'User', at: 'auth', skip: [:registrations]
 
   mount_devise_token_auth_for 'Admin', at: 'admin_auth'
-  #as :admin do
+  # as :admin do
   #  # Define routes for Admin within this block.
-  #end
+  # end
   root 'beneficiaries#index'
   resources :beneficiaries, only: %i[index create update destroy]
   resources :transactions, only: %i[index create update destroy]

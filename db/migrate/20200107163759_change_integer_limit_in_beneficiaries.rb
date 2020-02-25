@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ChangeIntegerLimitInBeneficiaries < ActiveRecord::Migration[6.0]
   def change
     change_column :beneficiaries, :telephone_number, :integer, limit: 8
