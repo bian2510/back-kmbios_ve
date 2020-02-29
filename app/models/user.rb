@@ -2,6 +2,8 @@
 
 class User < ActiveRecord::Base
   has_many :transactions
+  # the optional: true is because, I have a problem with the request to endpoint of
+  # users, with thata not throw error "set token in other model" "Admint Must Exist" 
   belongs_to :admin, optional: true
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
