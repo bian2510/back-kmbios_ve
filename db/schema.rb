@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_200_224_212_509) do
+ActiveRecord::Schema.define(version: 20_200_229_185_405) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -49,6 +49,12 @@ ActiveRecord::Schema.define(version: 20_200_224_212_509) do
     t.bigint 'personal_id'
     t.bigint 'telephone_number'
     t.bigint 'mobile_pay'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+  end
+
+  create_table 'roles', force: :cascade do |t|
+    t.string 'name'
     t.datetime 'created_at', precision: 6, null: false
     t.datetime 'updated_at', precision: 6, null: false
   end
