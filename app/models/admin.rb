@@ -8,6 +8,6 @@ class Admin < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   extend Devise::Models # Fix error undefined method `devise'
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
 end
