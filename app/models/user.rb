@@ -2,7 +2,7 @@
 
 class User < ActiveRecord::Base
   has_many :transactions
-  belongs_to :admin
+  belongs_to :admin, optional: true
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   extend Devise::Models # Fix error undefined method `devise'
