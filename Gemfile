@@ -36,6 +36,8 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   # Generate schema entity-relationship
   gem 'railroady'
+  # Generate documentation from RSpec
+  gem 'rspec_api_documentation'
 end
 
 group :development do
