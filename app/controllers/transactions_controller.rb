@@ -13,13 +13,11 @@ class TransactionsController < ApplicationController
     transaction = Transaction.new(transaction_params)
     transaction.money_sent = transaction_params['money_received'] * transaction_params['rate']
     transaction.beneficiary_id = Beneficiary.find(params[:beneficiary_id]).id
-    transaction.users = [current_user, User.find(params[:user_id])]
+    transaction.users = [current_admin, User.find(params[:user_id])]
     transaction.in_progress = true
-    puts transaction
     if transaction.save
       render json: transaction, status: :created
     else
-      byebug
       render json: transaction.errors, status: :unprocessable_entity
     end
   end
