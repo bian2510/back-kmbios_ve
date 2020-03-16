@@ -5,11 +5,8 @@ class MainController < ApplicationController
   before_action :authenticate_member!, only: [:index]
 
   def index
-    if admin_signed_in?
-      show_data_for_admin
-    else
-      show_data_for_user
-    end
+    return show_data_for_admin if admin_signed_in?
+    return show_data_for_user if user_signed_in?
   end
 
   private
@@ -25,7 +22,11 @@ class MainController < ApplicationController
 
   def show_data_for_user
     transactions = Transaction.all
-    users = User.all
-    render json: { transactions: transactions, users: users }, status: :ok
+    admin = current_user.admin
+    render json: { transactions: transactions, admin: admin }, status: :ok
+  end
+
+  def params_login
+    params.require(:main).permit(:email, :password)
   end
 end
