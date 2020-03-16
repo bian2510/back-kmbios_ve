@@ -6,12 +6,12 @@ class BeneficiariesController < ApplicationController
   before_action :authenticate_admin!, except: [:index]
 
   def index
-    render json: Beneficiary.where(user_id: current_admin.id)
+    render json: Beneficiary.where(admin_id: current_admin.id)
   end
 
   def create
     beneficiary = Beneficiary.new(beneficiary_params)
-    beneficiary.user_id = current_user.id
+    beneficiary.admin_id = current_admin.id
     if beneficiary.save
       render json: beneficiary, status: :created
     else

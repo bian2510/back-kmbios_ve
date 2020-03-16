@@ -1,13 +1,15 @@
 # frozen_string_literal: true
 
 class MainController < ApplicationController
+  devise_token_auth_group :member, contains: %i[user admin]
+  before_action :authenticate_member!, only: [:index]
+
   def index
-    beneficiaries = Beneficiary.all
-    transactions = Transaction.all
-    users = User.all
-    response = { beneficiaries: beneficiaries, transactions: transactions,
-                 users: users }
-    render json: response, status: :ok
+    if admin_signed_in?
+      show_data_for_admin
+    else
+      show_data_for_user
+    end
   end
 
   private
@@ -16,14 +18,14 @@ class MainController < ApplicationController
     beneficiaries = Beneficiary.all
     transactions = Transaction.all
     users = User.all
-    { beneficiaries: beneficiaries, transactions: transactions,
-      users: users }
+    render json: { beneficiaries: beneficiaries,
+                   transactions: transactions,
+                   users: users }, status: :ok
   end
 
   def show_data_for_user
     transactions = Transaction.all
     users = User.all
-    { transactions: transactions, users: users }
-    render json: response, status: :ok
+    render json: { transactions: transactions, users: users }, status: :ok
   end
 end

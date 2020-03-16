@@ -22,14 +22,14 @@ gem 'puma', '~> 3.11'
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.4.2', require: false
+gem 'bootsnap', '~> 1.4.2', require: false
 
 # Simple, multi-client and secure token-based authentication for Rails.
 gem 'devise_token_auth'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making
 # cross-origin AJAX possible
-gem 'rack-cors', '>= 1.0.4'
+gem 'rack-cors', '~> 1.0.4'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -38,6 +38,14 @@ group :development, :test do
   gem 'railroady'
   # Generate documentation from RSpec
   gem 'rspec_api_documentation'
+  # Framework of RoR for test
+  gem 'rspec-rails', '~> 4.0.0.beta'
+  # Faker used to easily generate fake data: names, addresses, phone numbers, etc.
+  gem 'faker', '~> 2.10'
+  # Provides integration between factory_bot and rails 4.2 or newer
+  gem 'factory_bot_rails', '~> 5.1'
+  # Strategies for cleaning databases. Can be used to ensure a clean slate for testing.
+  gem 'database_cleaner', '~> 1.8'
 end
 
 group :development do
