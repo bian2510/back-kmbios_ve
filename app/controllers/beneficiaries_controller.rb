@@ -6,32 +6,35 @@ class BeneficiariesController < ApplicationController
   before_action :authenticate_admin!, except: [:index]
 
   def index
-    render json: Beneficiary.where(admin_id: current_admin.id)
+    render json: LoaderData.where(admin_id: current_admin.id)
   end
 
   def create
     beneficiary = Beneficiary.new(beneficiary_params)
     beneficiary.admin_id = current_admin.id
     if beneficiary.save
-      render json: beneficiary, status: :created
+      return render json: LoaderData.new.data_for_admin, status: :ok if admin_signed_in?
+      return render json: LoaderData.new.data_for_user, status: :ok if user_signed_in?
     else
       render json: beneficiary.errors, status: :unprocessable_entity
     end
   end
 
   def update
-    beneficiary = Beneficiary.find(params[:id])
+    beneficiary = Beneficiary.find_by(params[:account_number])
     if beneficiary.update(beneficiary_params)
-      render json: beneficiary, status: :ok
+      return render json: LoaderData.new.data_for_admin, status: :ok if admin_signed_in?
+      return render json: LoaderData.new.data_for_user, status: :ok if user_signed_in?
     else
       render json: beneficiary.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
-    beneficiary = Beneficiary.find(params[:id])
+    beneficiary = Beneficiary.find_by(params[:account_number])
     if beneficiary.destroy
-      render json: beneficiary, status: :ok
+      return render json: LoaderData.new.data_for_admin, status: :ok if admin_signed_in?
+      return render json: LoaderData.new.data_for_user, status: :ok if user_signed_in?
     else
       render json: beneficiary.errors, status: :unprocessable_entity
     end

@@ -5,25 +5,9 @@ class MainController < ApplicationController
   before_action :authenticate_member!, only: [:index]
 
   def index
-    return show_data_for_admin if admin_signed_in?
-    return show_data_for_user if user_signed_in?
-  end
-
-  private
-
-  def show_data_for_admin
-    beneficiaries = Beneficiary.all
-    transactions = Transaction.all
-    users = User.all
-    render json: { beneficiaries: beneficiaries,
-                   transactions: transactions,
-                   users: users }, status: :ok
-  end
-
-  def show_data_for_user
-    transactions = Transaction.all
-    admin = current_user.admin
-    render json: { transactions: transactions, admin: admin }, status: :ok
+    show = LoaderData.new
+    return render json: show.data_for_admin, status: :ok if admin_signed_in?
+    return render json: show.data_for_user, status: :ok if user_signed_in?
   end
 
   def params_login
