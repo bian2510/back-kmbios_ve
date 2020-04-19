@@ -21,7 +21,7 @@ class BeneficiariesController < ApplicationController
   end
 
   def update
-    beneficiary = Beneficiary.find_by(params[:account_number])
+    beneficiary = Beneficiary.find(params[:id])
     if beneficiary.update(beneficiary_params)
       return render json: LoaderData.new.data_for_admin, status: :ok if admin_signed_in?
       return render json: LoaderData.new.data_for_user, status: :ok if user_signed_in?
