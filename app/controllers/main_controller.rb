@@ -7,7 +7,10 @@ class MainController < ApplicationController
   def index
     show = LoaderData.new
     return render json: show.data_for_admin, status: :ok if admin_signed_in?
-    return render json: show.data_for_user, status: :ok if user_signed_in?
+
+    if user_signed_in?
+      render json: show.data_for_user(current_user), status: :ok
+    end
   end
 
   def params_login

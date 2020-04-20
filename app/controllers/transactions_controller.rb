@@ -14,7 +14,7 @@ class TransactionsController < ApplicationController
     transaction.money_sent = transaction_params['money_received'] * transaction_params['rate']
     transaction.beneficiary_id = Beneficiary.find(params[:beneficiary_id]).id
     # currency is hardcoded for now
-    transaction.currency = "ARS"
+    transaction.currency = 'ARS'
     transaction.user_id = User.find(params[:user_id]).id
     transaction.admin_id = current_admin.id
     transaction.in_progress = true
