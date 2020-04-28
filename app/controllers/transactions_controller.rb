@@ -2,8 +2,8 @@
 
 class TransactionsController < ApplicationController
   devise_token_auth_group :member, contains: %i[user admin]
-  before_action :authenticate_member!, only: %i[index update]
-  before_action :authenticate_admin!, only: %i[create destroy]
+  #before_action :authenticate_member!, only: %i[index update]
+  #before_action :authenticate_admin!, only: %i[create destroy]
 
   def index
     render json: Transaction.where(users: current_member)
@@ -19,6 +19,7 @@ class TransactionsController < ApplicationController
     transaction.admin_id = current_admin.id
     transaction.in_progress = true
     if transaction.save
+      TransactionMailer.new_transaction_email(transaction: Transaction.first).deliver
       render json: transaction, status: :created
     else
       render json: transaction.errors, status: :unprocessable_entity
