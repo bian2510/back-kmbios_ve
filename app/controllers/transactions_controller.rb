@@ -2,8 +2,8 @@
 
 class TransactionsController < ApplicationController
   devise_token_auth_group :member, contains: %i[user admin]
-  #before_action :authenticate_member!, only: %i[index update]
-  #before_action :authenticate_admin!, only: %i[create destroy]
+  before_action :authenticate_member!, only: %i[index update]
+  before_action :authenticate_admin!, only: %i[create destroy]
 
   def index
     render json: Transaction.where(users: current_member)
