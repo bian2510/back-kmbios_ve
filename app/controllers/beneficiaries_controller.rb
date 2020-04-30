@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class BeneficiariesController < ApplicationController
-  devise_token_auth_group :member, contains: %i[user admin]
-  before_action :authenticate_member!, only: [:index]
-  before_action :authenticate_admin!, except: [:index]
+  before_action :authenticate_admin!
 
   def index
     render json: Beneficiary.where(admin_id: current_member.id)
