@@ -10,6 +10,6 @@ class User < ActiveRecord::Base
   extend Devise::Models # Fix error undefined method `devise'
   # for User (call 'User.connection' to establish a connection):Class
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :rememberable
   include DeviseTokenAuth::Concerns::User
 end

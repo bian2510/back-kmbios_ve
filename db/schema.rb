@@ -54,12 +54,6 @@ ActiveRecord::Schema.define(version: 2020_02_29_222650) do
     t.index ["admin_id"], name: "index_beneficiaries_on_admin_id"
   end
 
-  create_table "roles", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "transactions", force: :cascade do |t|
     t.bigint "beneficiary_id"
     t.bigint "user_id"
