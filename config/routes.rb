@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  mount_devise_token_auth_for 'User', at: 'user_auth'
-  mount_devise_token_auth_for 'Admin', at: 'admin_auth'
+  mount_devise_token_auth_for 'User', at: 'auth'
+  mount_devise_token_auth_for 'Admin', at: 'admin_auth',  controllers: {
+    sessions: 'overrides/sessions',
+  }
   # as :admin do
   #   # Define routes for Admin within this block.
   # end
