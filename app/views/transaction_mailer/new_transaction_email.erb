@@ -10,8 +10,19 @@
   <body>
     <!--<%= yield %> -->
     <p>Id: <%=@transaction.id%></p>
-    <p>Dinero a enviar: <%=@transaction.money_sent%></p>
+    <p>Bank: <%=@transaction.beneficiary.bank%></p>
+    <p>Numero de cuenta: <%=@transaction.beneficiary.account_number%></p>
+    <p>Nombre: <%=@transaction.beneficiary.name%></p>
+    <p>Apellido: <%=@transaction.beneficiary.last_name%></p>
+    <p>Cedula: <%=@transaction.beneficiary.personal_id%></p>
+    <p>Dinero recibido: <%=@transaction.money_received%></p>
     <p>Tasa: <%=@transaction.rate%></p>
-    <p>Encargado: <%=@transaction.user%></p>
+    <p>Dinero a enviar: <%=@transaction.money_sent%></p>
+    <p>Estado: <%=unless @transaction.finished == true
+      "En curso"
+      else
+      "Completa"
+    end%></p>
+    <p>Encargado: <%=@transaction.user.email%></p>
   </body>
 </html>

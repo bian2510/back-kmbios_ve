@@ -4,7 +4,13 @@ class BeneficiariesController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    render json: Beneficiary.where(admin_id: current_member.id)
+    render json: Beneficiary.where(admin_id: current_admin.id)
+  end
+
+  def show
+    if current_admin.id == beneficiary.admin_id
+      render json: Beneficiary.find(params[:id])
+    end
   end
 
   def create
@@ -19,19 +25,23 @@ class BeneficiariesController < ApplicationController
 
   def update
     beneficiary = Beneficiary.find(params[:id])
-    if beneficiary.update(beneficiary_params)
-      render json: beneficiary, status: :ok
-    else
-      render json: beneficiary.errors, status: :unprocessable_entity
+    if current_admin.id == beneficiary.admin_id
+      if beneficiary.update(beneficiary_params)
+        render json: beneficiary, status: :ok
+      else
+        render json: beneficiary.errors, status: :unprocessable_entity
+      end
     end
   end
 
   def destroy
-    beneficiary = Beneficiary.find_by(params[:account_number])
-    if beneficiary.destroy
-      render json: Beneficiary.all, status: :ok
-    else
-      render json: beneficiary.errors, status: :unprocessable_entity
+    beneficiary = Beneficiary.find(params[:id])
+    if current_admin == beneficiary.admin_id
+      if beneficiary.destroy
+        render json: Beneficiary.all, status: :ok
+      else
+        render json: beneficiary.errors, status: :unprocessable_entity
+      end
     end
   end
 
