@@ -5,4 +5,9 @@ class TransactionMailer < ApplicationMailer
     @transaction = params[:transaction]
     mail(to: 'bian251091@gmail.com', subject: 'Hay una nueva transaccion')
   end
+
+  def update_transaction_email(params)
+    @transaction = params[:transaction]
+    mail(to: 'bian251091@gmail.com', subject: 'Hay una nueva transaccion')
+  end
 end

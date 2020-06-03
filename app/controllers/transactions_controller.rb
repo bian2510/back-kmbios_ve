@@ -21,7 +21,7 @@ class TransactionsController < ApplicationController
     transaction = Transaction.new(transaction_params)
     transaction.admin_id = current_admin.id
     if transaction.save
-      TransactionMailer.new_transaction_email(transaction: Transaction.first).deliver
+      TransactionMailer.new_transaction_email(transaction: transaction).deliver
       render json: transaction, status: :created
     else
       render json: transaction.errors, status: :unprocessable_entity
@@ -30,6 +30,7 @@ class TransactionsController < ApplicationController
 
   def update
     transaction = Transaction.find(params[:id])
+    transaction.voucher.attach(params[:voucher])
     if user_signed_in? && transaction.user_id == current_member.id
       update_transaction(transaction)
     elsif admin_signed_in? && transaction.admin_id == current_member.id
@@ -49,7 +50,9 @@ class TransactionsController < ApplicationController
   private
 
   def update_transaction(transaction)
-    if transaction.update(update_transaction_params)
+    if transaction.update({ finished: true })
+      byebug
+      TransactionMailer.update_transaction_email(transaction: transaction).deliver
       render json: transaction, status: :ok
     else
       render json: transaction.errors, status: :unprocessable_entity
@@ -64,6 +67,6 @@ class TransactionsController < ApplicationController
   end
 
   def update_transaction_params
-    params.require(:transaction).permit(:finished)
+    params.require(:voucher)
   end
 end
