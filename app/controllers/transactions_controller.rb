@@ -51,7 +51,6 @@ class TransactionsController < ApplicationController
 
   def update_transaction(transaction)
     if transaction.update({ finished: true })
-      byebug
       TransactionMailer.update_transaction_email(transaction: transaction).deliver
       render json: transaction, status: :ok
     else
